@@ -1,0 +1,67 @@
+service: rest-api-dynamo
+
+# provider creates a role with db permissions
+provider:
+  name: aws
+  runtime: nodejs4.3
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:737979393706:table/TestTable1"
+
+# this is the database creation script
+resources:
+  Resources:
+    DynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: "TestTable1"
+
+# List your lambdas here
+functions:
+  create:
+    handler: funcs/create.create
+    events:
+      - http:
+          path: funcs
+          method: post
+          cors: true
+
+  get:
+    handler: funcs/get.get
+    events:
+      - http:
+          path: funcs/{id}
+          method: get
+          cors: true
+  update:
+    handler: funcs/update.update
+    events:
+      - http:
+          path: funcs/{id}
+          method: put
+          cors: true
+
+  delete:
+    handler: funcs/delete.delete
+    events:
+      - http:
+          path: funcs/{id}
+          method: delete
+          cors: true

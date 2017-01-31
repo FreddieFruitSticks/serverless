@@ -1,0 +1,11 @@
+{
+  "name": "rest-api-dynamo",
+  "version": "1.0.0",
+  "description": "Serverless CRUD service exposing a REST HTTP API",
+  "author": "Freddie",
+  "dependencies": {
+    "aws-sdk": "^2.6.7",
+    "lodash": "^4.17.4",
+    "uuid": "^2.0.3"
+  }
+}
