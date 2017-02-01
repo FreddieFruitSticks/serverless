@@ -35,6 +35,7 @@ resources:
 
 # List your lambdas here
 functions:
+  # crud operations
   create:
     handler: funcs/create.create
     events:
@@ -64,4 +65,13 @@ functions:
       - http:
           path: funcs/{id}
           method: delete
+          cors: true
+
+  # frontend operations
+  index:
+    handler: frontend/index.index
+    events:
+      - http:
+          path: index
+          method: get
           cors: true
