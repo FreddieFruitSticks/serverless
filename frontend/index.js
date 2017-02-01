@@ -1,15 +1,18 @@
 'use strict'
 
 module.exports.index = (event, context, callback) => {
-  const html = "<p>Hello<p>"
-
+  const message = "<p>Hello<p>"
+  const html = `
+  <html>
+    <body>${message}</body>
+  </html>
+  `;
   const response = {
-    statusCode:200,
-    header:{
+    statusCode: 200,
+    headers: {
       'Content-Type': 'text/html',
     },
-    body:html
-  }
-
-  callback(null, response)
+    body: html,
+  };
+  context.succeed(response)
 }

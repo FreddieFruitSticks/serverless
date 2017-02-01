@@ -74,4 +74,3 @@ functions:
       - http:
           path: index
           method: get
-          cors: true
