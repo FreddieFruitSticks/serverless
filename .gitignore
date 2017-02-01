@@ -1,3 +1,4 @@
 node_modules/
+.serverless/
 cloudformation-template-update-stack.json
 rest-api-dynamo.zip
