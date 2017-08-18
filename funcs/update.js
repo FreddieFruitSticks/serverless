@@ -1,10 +1,9 @@
-'use strict'
+'use strict';
 
-const AWS = require('aws-sdk')
-const dynamo = new AWS.DynamoDB()
+const AWS = require('aws-sdk');
+const dynamo = new AWS.DynamoDB();
 
-module.exports.update = (event, context, callback) => {
-  const data = JSON.parse(event.body)
+exports.update = (event, context, callback) => {
   const params = {
     TableName: 'TestTable1',
     Key:{
@@ -17,24 +16,24 @@ module.exports.update = (event, context, callback) => {
     },
     ExpressionAttributeValues:{
       ":text":{
-        S: data.text,
+        S: JSON.stringify(event)
       }
     },
     UpdateExpression: 'SET #msg_text = :text',
     ReturnValues: "ALL_NEW"
-  }
+  };
 
   dynamo.updateItem(params, (error, result) => {
     if(error){
-      callback(null, new Error("did not update item"))
-      console.error(error)
+      callback(null, new Error("did not update item"));
+      console.error(error);
       return;
     }
 
     const response = {
       statusCode:200,
       body:JSON.stringify(result.Item)
-    }
+    };
     callback(null, response)
   });
-}
+};

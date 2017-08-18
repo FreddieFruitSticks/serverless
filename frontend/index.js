@@ -1,10 +1,10 @@
 'use strict'
 
-module.exports.index = (event, context, callback) => {
-  const message = "<p>Hello<p>"
+exports.index = (event, context, callback) => {
+  const message = "<p>Hello, World! Mr. Vurayai<p>"
   const html = `
   <html>
-    <body>${message}</body>
+    <body><h1>${message}</h1></body>
   </html>
   `;
   const response = {

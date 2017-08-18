@@ -4,8 +4,8 @@ const uuid = require('uuid');
 const AWS = require('aws-sdk');
 const dynamo = new AWS.DynamoDB();
 
-module.exports.create = (event, context, callback) => {
-  const data = JSON.parse(event.body)
+exports.create = (event, context, callback) => {
+  console.log("-------------", event);
   const params = {
     TableName: "TestTable1",
     Item:{
@@ -13,19 +13,19 @@ module.exports.create = (event, context, callback) => {
         S: uuid.v1()
       },
       text:{
-        S: data.text
+        S: JSON.stringify(event)
       }
     },
   }
 
   dynamo.putItem(params, (error, result) =>{
     if (error) {
-      console.log(error)
+      console.log("!!!! ",error);
       callback(new Error('Couldn\'t create the item.'));
     }else{
       const response = {
-        statusCode: 200,
-        body: JSON.stringify(result.Item),
+        statusCode: 200
+        //body: JSON.stringify(result.Item),
       };
       callback(null, response)
     }
